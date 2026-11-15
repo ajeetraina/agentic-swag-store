@@ -21,7 +21,6 @@ You see tools like `dhi_list_repositories` and `dhi_get_image_cves`.
 
 ```bash
 sbx mcp auth remotedhi
-sbx mcp auth status
 ```
 
 The credential stays on the host. The sandbox never holds it.
