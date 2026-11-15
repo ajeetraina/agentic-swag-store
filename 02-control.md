@@ -83,7 +83,7 @@ The agent only sees what you mount. You decide four things:
 ```bash
 cp .env.example .env
 mkdir -p ~/swag-docs
-sbx rm swag
+sbx rm swag --force
 sbx run --name swag claude . ./.env:ro ~/swag-docs:ro
 ```
 
