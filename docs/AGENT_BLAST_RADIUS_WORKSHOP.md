@@ -19,7 +19,7 @@ The workshop follows four stages:
 3. **Consequences - What could go wrong?** Observe how untrusted content and excessive permissions can lead to out-of-scope actions and impact.
 4. **Controls - How do we contain it?** Apply layered defenses, repeat the tests, and verify the results.
 
-Use these four questions throughout the workshop. The goal is to build a practical security-investigation habit, not to assume that every agent has every capability. The participant runbook [4Cs Guided Lab](labs/FOUR_CS_GUIDED_LAB.md) contains the exact startup commands, prompts, expected observations, evidence checklist, retest matrix, and cleanup steps.
+Use these four questions throughout the workshop. The goal is to build a practical security-investigation habit, not to assume that every agent has every capability. The participant runbook is split into four pages: [Context](labs/4CS_CONTEXT.md), [Capabilities](labs/4CS_CAPABILITIES.md), [Consequences](labs/4CS_CONSEQUENCES.md), and [Controls](labs/4CS_CONTROLS.md). The [4Cs lab index](labs/FOUR_CS_GUIDED_LAB.md) contains startup instructions and navigation.
 
 ## Learning outcomes
 
