@@ -1,20 +1,24 @@
 # Agentic Swag Store
 
-An AI-agent-ready Swag Store application based on the Docker Product Catalog sample.
+A deliberately small application used as the target environment for a security investigation into autonomous coding agents.
 
-This repository starts from [dockersamples/catalog-service-node](https://github.com/dockersamples/catalog-service-node). The application demonstrates a Node.js catalog API, PostgreSQL, S3-compatible product-image storage, Kafka product events, an external inventory service, a React storefront, and Testcontainers integration tests.
+## Workshop: Trust the Agent?
 
-## Workshop goal
+**The blast radius of an autonomous coding agent**
 
-Use a realistic application to explore how to build and run AI coding agents safely with Docker Sandboxes, Docker MCP Gateway, and AI Governance.
+This workshop is not primarily about building an AI coding agent. It is about what can happen when an agent is given broad filesystem access, inherited credentials, network reachability, powerful tools, or permission to make consequential changes.
 
-## Storefront demo
+Participants investigate a simulated incident involving untrusted catalog content, workspace changes, synthetic credential canaries, network access, and MCP tool misuse. They then apply layered controls and repeat the same tests.
 
-The React client presents the catalog as a responsive product-card storefront. Participants can add products to a local, in-memory demo cart and change quantities.
+**Start here:** [Agent Blast Radius Workshop](docs/AGENT_BLAST_RADIUS_WORKSHOP.md)
 
-**Important:** the cart is browser state only. There is no checkout, payment processing, order creation, or inventory reservation. Prices are demo catalog values, not a live offer.
+The workshop uses disposable resources, synthetic data, and private mock endpoints only. It must never use production credentials, real customer data, public targets, or destructive operations against a participant's host.
 
-Product photos are served by the existing product-image API when a catalog item has an uploaded image. Items without an image use a visual placeholder. The Kotis Docker store is the intended visual reference for the workshop, but its product photography has not been copied into this repository. Add only image assets that the project has permission to reuse, and retain any required attribution or usage terms.
+## Application
+
+This repository is based on [dockersamples/catalog-service-node](https://github.com/dockersamples/catalog-service-node). It includes a Node.js catalog API, PostgreSQL, S3-compatible product-image storage, Kafka product events, a mock inventory integration, a React storefront, and Testcontainers integration tests.
+
+The storefront presents catalog items and a local, in-memory demo cart. There is no real checkout, payment processing, order creation, or inventory reservation.
 
 ## Getting started
 
