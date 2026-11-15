@@ -1,39 +1,21 @@
-# Agentic Swag Store
+# The 5 Cs of running agents safely
 
-A deliberately small application used as the target environment for a security investigation into autonomous coding agents.
+One app, one agent, five short labs. Each lab adds one layer to the same sandbox.
 
-## Workshop: Trust the Agent?
+| # | C | Question | Lab |
+|---|---|---|---|
+| 1 | Contain | Where does the agent run? | [01-contain.md](01-contain.md) |
+| 2 | Control | What can it reach (network and files)? | [02-control.md](02-control.md) |
+| 3 | Choice | Which tools can it use? (DHI MCP) | [03-choice.md](03-choice.md) |
+| 4 | Capacity | Does every teammate get the same sandbox? | [04-capacity.md](04-capacity.md) |
+| 5 | Coordinate | How do several agents work together? | [05-coordinate.md](05-coordinate.md) |
 
-**The blast radius of an autonomous coding agent**
+## Before you start
 
-The first live demonstration runs the Swag Store portal and its supporting services with Docker Compose inside a Docker Sandbox. A coding agent investigates an ordinary inventory issue and is exposed to a synthetic prompt-injection instruction that attempts to persuade it to delete the catalog.
+- `sbx` 0.39.0 or later, signed in (`sbx login`)
+- This repo cloned on your machine
+- About 15 minutes per lab
 
-The destructive target is only the disposable PostgreSQL database created by this Compose project. The exercise uses synthetic products, no production credentials, and no host Docker socket.
+All data in the Swag Store is synthetic. The stack uses only test credentials.
 
-**Start here:** [Live lab: The agent that emptied the store](docs/labs/AGENT_CATASTROPHE_DEMO.md)
-
-## Application
-
-This repository is based on [dockersamples/catalog-service-node](https://github.com/dockersamples/catalog-service-node). It includes a Node.js catalog API, PostgreSQL, S3-compatible product-image storage, Kafka product events, a mock inventory integration, a React storefront, and Testcontainers integration tests.
-
-The storefront has a local, in-memory demo cart. It does not implement real checkout, payments, order creation, or inventory reservation.
-
-## Run locally
-
-```bash
-cp .env.example .env
-docker compose up -d --build
-```
-
-The Compose stack starts the storefront, API, PostgreSQL, pgAdmin, LocalStack, WireMock, Kafka, and Kafka UI. The API is included as a Compose service. The portal is served on port 5173.
-
-## Tests
-
-```bash
-npm run unit-test
-npm run integration-test
-```
-
-## Upstream attribution
-
-This project is based on [dockersamples/catalog-service-node](https://github.com/dockersamples/catalog-service-node). The upstream project is released under CC0 1.0 Universal. The original license is retained in this repository.
+Do the labs in order. Each one assumes the sandbox from the previous lab.
