@@ -55,7 +55,21 @@ The database is seeded with five synthetic Docker swag products. Check that the 
 curl -fsS http://localhost:3000/api/products
 ```
 
-Open the storefront using the sandbox's supported port-forwarding or preview workflow for port 5173. Do not assume host port forwarding is automatic; verify it in the installed sandbox CLI or UI.
+### View the storefront from your host
+
+Compose runs **inside** the sandbox, so the ports above are only reachable on the sandbox's own loopback. Host port forwarding is **not** automatic — you must publish the port explicitly. Note the sandbox name from `sbx ls`, then publish port 5173 (replace the name with yours):
+
+```bash
+sbx ls
+sbx port publish claude-agentic-swag-store 5173:5173
+sbx port ls claude-agentic-swag-store
+```
+
+Now open the storefront at **http://localhost:5173** on your host.
+
+> Port mappings are dropped when the sandbox is stopped — re-run `sbx port publish` after any `sbx stop`/`sbx run` cycle. The `demo-client` service binds Vite to `0.0.0.0` so it is reachable once published.
+
+> **Gotcha — JSON instead of a UI:** `http://localhost:3000` is the raw **API**, not the storefront; returning a product-list JSON array there is correct. The UI only lives on **5173**. If `5173` shows nothing, check `docker compose ps` for `demo-client` — on recent `node:lts-slim` images (Node 24+) the bundled `yarn` was removed, so the original `yarn dev` command crash-loops with `Cannot find module '.../yarn'`. The `demo-client` command uses `npm install && npx vite --host 0.0.0.0` to avoid this.
 
 ## 3. Establish the baseline
 

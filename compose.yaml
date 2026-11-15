@@ -2,7 +2,7 @@ services:
   demo-client:
     image: node:lts-slim
     working_dir: /usr/local/app
-    command: yarn dev
+    command: sh -c "npm install && npx vite --host 0.0.0.0"
     ports:
       - "5173:5173"
     environment:
@@ -36,7 +36,7 @@ services:
       postgres:
         condition: service_healthy
       aws:
-        condition: service_started
+        condition: service_healthy
       mock-inventory:
         condition: service_started
       kafka:
@@ -84,8 +84,15 @@ services:
     image: localstack/localstack:4.14.0
     ports:
       - "4566:4566"
+    healthcheck:
+      test: ["CMD-SHELL", "awslocal s3 ls >/dev/null 2>&1 || exit 1"]
+      interval: 3s
+      timeout: 5s
+      retries: 20
     post_start:
-      - command: awslocal s3api create-bucket --bucket product-images
+      - command: >
+          sh -c 'until awslocal s3 ls >/dev/null 2>&1; do sleep 1; done;
+          awslocal s3api create-bucket --bucket product-images'
 
   mock-inventory:
     image: wiremock/wiremock:3.12.1
