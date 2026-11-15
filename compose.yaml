@@ -1,26 +1,62 @@
 services:
-
-  ################## DEMO WEB CLIENT ##################
   demo-client:
     image: node:lts-slim
     working_dir: /usr/local/app
     command: yarn dev
     ports:
-      - 5173:5173
+      - "5173:5173"
+    environment:
+      API_PROXY_TARGET: http://api:3000
     volumes:
       - ./dev/webapp:/usr/local/app
+    depends_on:
+      - api
 
-  ############## DATABASE AND VISUALIZER ##############
+  api:
+    build:
+      context: .
+      target: dev
+    command: yarn dev-container
+    ports:
+      - "3000:3000"
+    environment:
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_ENDPOINT_URL: http://aws:4566
+      INVENTORY_SERVICE_BASE_URL: http://mock-inventory:8080
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGHOST: postgres
+      PGDATABASE: catalog
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9093
+    volumes:
+      - ./src:/usr/local/app/src
+    depends_on:
+      postgres:
+        condition: service_healthy
+      aws:
+        condition: service_started
+      mock-inventory:
+        condition: service_started
+      kafka:
+        condition: service_started
+
   postgres:
     image: postgres:17.9
     ports:
       - "5432:5432"
     volumes:
-      - ./dev/db:/docker-entrypoint-initdb.d
+      - ./dev/db:/docker-entrypoint-initdb.d:ro
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: catalog
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d catalog"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
 
   pgadmin:
     image: dpage/pgadmin4:9.14.0
@@ -41,9 +77,9 @@ services:
       PGADMIN_CONFIG_SERVER_MODE: 'False'
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
-  ############## LOCAL AWS ##############
   aws:
     image: localstack/localstack:4.14.0
     ports:
@@ -51,35 +87,26 @@ services:
     post_start:
       - command: awslocal s3api create-bucket --bucket product-images
 
-  ############## MOCK INVENTORY SERVICE ##############
   mock-inventory:
     image: wiremock/wiremock:3.12.1
     ports:
-      - 8090:8080
+      - "8090:8080"
     volumes:
-      - ./dev/inventory-mocks:/home/wiremock
+      - ./dev/inventory-mocks:/home/wiremock:ro
 
-  ############## KAFKA AND VISUALIZATION ##############
   kafka:
     image: apache/kafka:4.0.0
     ports:
-      - 9092:9092
+      - "9092:9092"
     environment:
-      # Configure listeners for both docker and host communication
       KAFKA_LISTENERS: CONTROLLER://localhost:9091,HOST://0.0.0.0:9092,DOCKER://0.0.0.0:9093
       KAFKA_ADVERTISED_LISTENERS: HOST://localhost:9092,DOCKER://kafka:9093
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,DOCKER:PLAINTEXT,HOST:PLAINTEXT
-
-      # Settings required for KRaft mode
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9091
-
-      # Listener to use for broker-to-broker communication
       KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER
-
-      # Required for a single node cluster
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     post_start:
       - command: /opt/kafka/bin/kafka-topics.sh --create --if-not-exists --topic products --partitions 1 --replication-factor 1 --bootstrap-server kafka:9093
@@ -87,7 +114,7 @@ services:
   kafka-ui:
     image: kafbat/kafka-ui:v1.2.0
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
       DYNAMIC_CONFIG_ENABLED: 'true'
       KAFKA_CLUSTERS_0_NAME: local
@@ -104,7 +131,7 @@ configs:
       {
         "Servers": {
           "1": {
-            "Name": "Local Postgres",
+            "Name": "Sandbox Postgres",
             "Group": "Servers",
             "Host": "postgres",
             "Port": 5432,
