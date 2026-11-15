@@ -10,7 +10,7 @@ This is a security investigation, not a coding-agent feature tour. Participants 
 
 The Swag Store is the deliberately small victim application. The workshop measures success by whether participants can identify, reproduce safely, contain, and verify the agent's blast radius.
 
-Detailed instructor and participant guide: [Agent Blast Radius Workshop](AGENT_BLAST_RADIUS_WORKSHOP.md).
+Detailed instructor guide: [Agent Blast Radius Workshop](AGENT_BLAST_RADIUS_WORKSHOP.md). Participant instructions with exact commands and prompts: [4Cs Guided Lab](labs/FOUR_CS_GUIDED_LAB.md).
 
 ## The 4Cs framework
 
@@ -28,7 +28,7 @@ The framework gives participants a repeatable way to reason about agent security
 - Inventory the agent's effective permissions across workspace, process environment, tools, credentials, and network.
 - Understand prompt injection through untrusted repository and application content.
 - Distinguish host isolation from authorization to connected services.
-- Identify direct paths that bypass governed MCP tools.
+- Understand direct MCP bypass risks when a separately configured MCP integration is part of the environment.
 - Apply Docker Sandboxes, Docker MCP Gateway, and available AI Governance controls as layered defenses.
 - Compare baseline and after-controls behavior using evidence rather than assumptions.
 
@@ -53,7 +53,7 @@ All actions use disposable resources, synthetic data, and mock endpoints. No pro
 | Stage | Labs | Participant focus |
 | --- | --- | --- |
 | **Context** | Lab 0: Establish the scene | Inventory workspace, environment, tools, MCP servers, network routes, and reachable services. |
-| **Capabilities** | Lab 1: Workspace blast radius; Lab 4: MCP tool misuse | Determine what the agent can change and which connected actions it can invoke. |
+| **Capabilities** | Lab 1: Workspace permissions | Verify which project files and sandbox services the agent can access. MCP tool testing is an optional extension because the base Compose stack has no MCP server. |
 | **Consequences** | Lab 2: Prompt injection through catalog content; Lab 3: Synthetic credential and network exposure; featured store-deletion demo | Observe attempted out-of-scope actions and measure their impact against disposable resources. |
 | **Controls** | Lab 5: Containment and retest | Apply sandboxing, least privilege, network restrictions, tool mediation, approval, and auditability; then rerun the tests. |
 
@@ -75,7 +75,7 @@ This is a threat model for the exercises, not a claim that every agent has every
 3. **Consequences:** Test prompt injection, synthetic credential and network paths, and the disposable catalog-deletion scenario.
 4. **Controls:** Apply Docker Sandboxes, Docker MCP Gateway, and available AI Governance controls, then retest and compare evidence.
 
-Target duration: 120 minutes. The detailed timing, setup, safety contract, lab instructions, evidence requirements, and instructor checklist are in [docs/AGENT_BLAST_RADIUS_WORKSHOP.md](AGENT_BLAST_RADIUS_WORKSHOP.md).
+Target duration: 120 minutes. Start participants with the [4Cs Guided Lab](labs/FOUR_CS_GUIDED_LAB.md) for runnable commands, prompts, observations, evidence and cleanup. The instructor guide contains the timing, safety contract and preparation checklist.
 
 ## Defense layers
 
