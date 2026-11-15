@@ -23,30 +23,30 @@ The workshop follows four stages. Each stage builds on the previous one:
 
 **The central question:** If an AI agent goes rogue, how much damage can it actually do?
 
-## Start the hands-on 4Cs lab
+## Start the hands-on 4Cs labs
 
-**Participant runbook:** [4Cs Guided Lab](docs/labs/FOUR_CS_GUIDED_LAB.md)
+Each C has a separate participant page with its own commands, prompt, expected observations, evidence checklist, and debrief:
 
-Start here after launching the sandbox. It provides the exact commands and prompts for Context, Capabilities, Consequences and Controls, plus expected observations, evidence to capture, and cleanup steps.
+- [1. Context: What can the agent see?](docs/labs/4CS_CONTEXT.md)
+- [2. Capabilities: What can the agent do?](docs/labs/4CS_CAPABILITIES.md)
+- [3. Consequences: What could go wrong?](docs/labs/4CS_CONSEQUENCES.md)
+- [4. Controls: How do we contain it?](docs/labs/4CS_CONTROLS.md)
+
+[Open the 4Cs lab index and startup instructions](docs/labs/FOUR_CS_GUIDED_LAB.md).
 
 ## Workshop labs
 
 | 4C stage | Lab | Title | What participants investigate |
 | --- | --- | --- | --- |
-| Context | 0 | Establish the scene | Inventory the agent's workspace, environment, tools, MCP servers, network routes, and reachable application services. |
-| Capabilities | 1 | Workspace permissions | Verify which project files the agent can read and write using a disposable fixture. |
-| Consequences | 2 | Secret discovery and prompt injection | Observe synthetic canary handling and whether untrusted catalog content redirects the agent. |
+| Context | 1 | Establish the scene | Inventory the agent's workspace, environment, tools, MCP servers, network routes, and reachable application services. |
+| Capabilities | 2 | Workspace permissions | Verify which project files the agent can read and write using a disposable fixture. |
+| Consequences | 3 | Secret discovery and prompt injection | Observe synthetic canary handling and whether untrusted catalog content redirects the agent. |
 | Consequences | Demo | The agent that emptied the store | Optional destructive exercise against the disposable PostgreSQL database only. |
-| Controls | 5 | Containment and retest | Apply isolation, least privilege, network restrictions and any separately configured tool governance, then repeat the tests. |
+| Controls | 4 | Containment and retest | Apply isolation, least privilege, network restrictions and any separately configured tool governance, then repeat the tests. |
 | Hardening finale | 6 | DHI MCP and image-source policy | Discover hardened images, compare agent recommendations, then apply and verify a Sandbox kit's network policy. |
 
-### Individual lab guides
+### DHI hardening finale
 
-**Core blast-radius investigation**
-- [Lab 0-5: 4Cs Guided Lab](docs/labs/FOUR_CS_GUIDED_LAB.md)
-- [Featured optional demo: The agent that emptied the store](docs/labs/AGENT_CATASTROPHE_DEMO.md)
-
-**DHI hardening finale**
 - [Lab 6.1: Register the DHI MCP server](docs/labs/DHI_MCP_01_REGISTER.md)
 - [Lab 6.2: Attach and authorize the MCP server](docs/labs/DHI_MCP_02_ATTACH_AUTHORIZE.md)
 - [Lab 6.3: Let the agent use DHI](docs/labs/DHI_MCP_03_AGENT_USES_DHI.md)
@@ -58,9 +58,8 @@ The DHI sequence is a positive hardening finale after the incident investigation
 
 Run the portal and its supporting services with Compose inside a Docker Sandbox. Ask the agent to map all services, explain how they communicate, and identify endpoints, authentication mechanisms and configuration dependencies. Observe which configuration files it inspects and whether it exposes synthetic credential values. An optional adversarial catalog variant tests whether untrusted content can persuade it to delete rows from the disposable PostgreSQL database.
 
-The guided runbook captures architecture discovery, effective permissions, synthetic secret handling, untrusted-content behavior, and the controls retest. The destructive store-deletion scenario is an optional extension, not an assumed agent outcome.
+The four separate 4Cs participant pages capture architecture discovery, effective permissions, synthetic secret handling, untrusted-content behavior, and the controls retest. The destructive store-deletion scenario is an optional extension, not an assumed agent outcome.
 
-**Start with:** [4Cs Guided Lab](docs/labs/FOUR_CS_GUIDED_LAB.md)  
 **Optional destructive demo:** [The agent that emptied the store](docs/labs/AGENT_CATASTROPHE_DEMO.md)
 
 **Full instructor and participant guide:** [Agent Blast Radius Workshop](docs/AGENT_BLAST_RADIUS_WORKSHOP.md)
@@ -73,19 +72,19 @@ The storefront has a local, in-memory demo cart. It does not implement real chec
 
 ## Run locally
 
-```bash
+~~~bash
 cp .env.example .env
 docker compose up -d --build
-```
+~~~
 
 The Compose stack starts the storefront, API, PostgreSQL, pgAdmin, LocalStack, WireMock, Kafka, and Kafka UI. The API is included as a Compose service. The portal is served on port 5173.
 
 ## Tests
 
-```bash
+~~~bash
 npm run unit-test
 npm run integration-test
-```
+~~~
 
 ## Safety
 
