@@ -21,7 +21,6 @@ You see tools like `dhi_list_repositories` and `dhi_get_image_cves`.
 
 ```bash
 sbx mcp auth remotedhi
-sbx mcp auth status
 ```
 
 The credential stays on the host. The sandbox never holds it.
@@ -61,10 +60,9 @@ The MCP server only steers. A kit enforces:
 ```bash
 sbx kit inspect "git+https://github.com/ajeetraina/docker-cloud-sandboxes-demo.git#dir=agent-cli/codex-dhi/dhi-mixin"
 sbx kit add swag "git+https://github.com/ajeetraina/docker-cloud-sandboxes-demo.git#dir=agent-cli/codex-dhi/dhi-mixin"
-sbx policy check network cgr.dev
 ```
 
-`cgr.dev` is denied. The agent can only land on DHI.
+Other image registries are denied at the network edge. The agent can only land on DHI.
 
 ## What you learned
 

@@ -1,0 +1,14 @@
+schemaVersion: "1"
+agent: claude
+
+workspace: .        # mount this repo read/write so the app code is inside the sandbox
+
+kits:
+  # DHI MCP + steering + 3rd-party registry deny, from Lab 3
+  - git+https://github.com/ajeetraina/docker-cloud-sandboxes-demo.git#dir=agent-cli/codex-dhi/dhi-mixin
+
+ports:
+  - sandbox: 5173   # storefront
+    host: 5173
+  - sandbox: 3000   # API
+    host: 3000
