@@ -6,34 +6,26 @@ A deliberately small application used as the target environment for a security i
 
 **The blast radius of an autonomous coding agent**
 
-This workshop is not primarily about building an AI coding agent. It is about what can happen when an agent is given broad filesystem access, inherited credentials, network reachability, powerful tools, or permission to make consequential changes.
+The first live demonstration runs the Swag Store portal and its supporting services with Docker Compose inside a Docker Sandbox. A coding agent investigates an ordinary inventory issue and is exposed to a synthetic prompt-injection instruction that attempts to persuade it to delete the catalog.
 
-Participants investigate a simulated incident involving untrusted catalog content, workspace changes, synthetic credential canaries, network access, and MCP tool misuse. They then apply layered controls and repeat the same tests.
+The destructive target is only the disposable PostgreSQL database created by this Compose project. The exercise uses synthetic products, no production credentials, and no host Docker socket.
 
-**Start here:** [Agent Blast Radius Workshop](docs/AGENT_BLAST_RADIUS_WORKSHOP.md)
-
-The workshop uses disposable resources, synthetic data, and private mock endpoints only. It must never use production credentials, real customer data, public targets, or destructive operations against a participant's host.
+**Start here:** [Live lab: The agent that emptied the store](docs/labs/AGENT_CATASTROPHE_DEMO.md)
 
 ## Application
 
 This repository is based on [dockersamples/catalog-service-node](https://github.com/dockersamples/catalog-service-node). It includes a Node.js catalog API, PostgreSQL, S3-compatible product-image storage, Kafka product events, a mock inventory integration, a React storefront, and Testcontainers integration tests.
 
-The storefront presents catalog items and a local, in-memory demo cart. There is no real checkout, payment processing, order creation, or inventory reservation.
+The storefront has a local, in-memory demo cart. It does not implement real checkout, payments, order creation, or inventory reservation.
 
-## Getting started
-
-The baseline follows the upstream development workflow. It requires Node.js 22+ and a container runtime for the supporting services.
+## Run locally
 
 ```bash
 cp .env.example .env
-docker compose up -d
-npm install --omit=optional
-npm run dev
+docker compose up -d --build
 ```
 
-Open the storefront at http://localhost:5173.
-
-The API runs as a local Node.js process. Docker Compose starts the supporting services used by the API and demo.
+The Compose stack starts the storefront, API, PostgreSQL, pgAdmin, LocalStack, WireMock, Kafka, and Kafka UI. The API is included as a Compose service. The portal is served on port 5173.
 
 ## Tests
 
@@ -41,8 +33,6 @@ The API runs as a local Node.js process. Docker Compose starts the supporting se
 npm run unit-test
 npm run integration-test
 ```
-
-Integration tests use Testcontainers to launch their dependencies. Run them in an environment where the required container runtime is available.
 
 ## Upstream attribution
 
