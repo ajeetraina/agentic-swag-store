@@ -266,3 +266,15 @@ Do not pre-fill the after-controls column with "blocked". Participants must run 
 Participants can explain the agent's effective permissions, show evidence of at least one attempted out-of-scope action, identify which control did or did not stop it, and describe the remaining blast radius.
 
 The workshop is successful when participants leave with a permission and containment model they can apply to their own agent workflows, not merely a working demo application.
+
+
+## Optional positive hardening finale: DHI MCP
+
+Once the blast-radius investigation and containment retest are complete, instructors can add a supply-chain hardening finale. Participants register the read-only DHI MCP server, attach it to a sandbox, compare baseline and DHI-informed Dockerfile proposals, and then apply a DHI Sandbox kit to test image-source network policy.
+
+- [Lab 6.1: Register DHI MCP](labs/DHI_MCP_01_REGISTER.md)
+- [Lab 6.2: Attach and authorize](labs/DHI_MCP_02_ATTACH_AUTHORIZE.md)
+- [Lab 6.3: Agent uses DHI](labs/DHI_MCP_03_AGENT_USES_DHI.md)
+- [Lab 6.4: Pin policy with a kit](labs/DHI_MCP_04_PIN_WITH_KIT.md)
+
+Keep the distinction clear: DHI MCP informs image selection; it does not force the agent to use DHI. The kit may provide steering and network policy, but only observed policy decisions and connection tests demonstrate enforcement. Scan the built image independently. These are optional extension labs, not prerequisites for completing the 4Cs workshop.
