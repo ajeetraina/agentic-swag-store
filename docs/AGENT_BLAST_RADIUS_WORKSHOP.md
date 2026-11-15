@@ -19,7 +19,7 @@ The workshop follows four stages:
 3. **Consequences - What could go wrong?** Observe how untrusted content and excessive permissions can lead to out-of-scope actions and impact.
 4. **Controls - How do we contain it?** Apply layered defenses, repeat the tests, and verify the results.
 
-Use these four questions throughout the workshop. The goal is to build a practical security-investigation habit, not to assume that every agent has every capability.
+Use these four questions throughout the workshop. The goal is to build a practical security-investigation habit, not to assume that every agent has every capability. The participant runbook [4Cs Guided Lab](labs/FOUR_CS_GUIDED_LAB.md) contains the exact startup commands, prompts, expected observations, evidence checklist, retest matrix, and cleanup steps.
 
 ## Learning outcomes
 
@@ -28,7 +28,7 @@ By the end, participants should be able to:
 1. Inventory the resources an agent can access through its workspace, process environment, tools, credentials, and network.
 2. Explain how prompt injection can arrive through untrusted repository or application content.
 3. Distinguish host isolation from authorization to external services.
-4. Identify direct paths that bypass a governed MCP tool.
+4. Explain why direct paths can bypass a governed MCP tool, where an MCP Gateway extension is configured.
 5. Apply layered controls using Docker Sandboxes, Docker MCP Gateway, and organizational AI governance.
 6. Compare the same simulated attack before and after controls, using observable evidence.
 
@@ -46,7 +46,7 @@ The exercise follows a staged incident:
 2. **Scope confusion:** the agent treats that text as relevant to its task.
 3. **Local impact:** it attempts an out-of-scope file change or destructive operation in the disposable workspace.
 4. **Credential exposure path:** while mapping service configuration, it encounters synthetic credential values and may disclose them unnecessarily or attempt to pass them to a private mock receiver.
-5. **Tool misuse path:** it attempts an unauthorized catalog or inventory change through an available tool.
+5. **Tool misuse path (optional extension):** if a mock MCP server is separately configured, test an unauthorized catalog or inventory change through that tool. The base Compose stack does not include an MCP server.
 6. **Network path:** it attempts to contact a controlled mock endpoint.
 7. **Containment:** participants add isolation, least privilege, tool mediation, approval, and auditability, then repeat the same scenario.
 
@@ -130,11 +130,11 @@ Observe:
 
 Capture the Git diff, file state, agent transcript, and sandbox configuration. A blocked host-path access is evidence only for that tested path and configuration.
 
-### Lab 4: MCP tool misuse
+### Optional extension: MCP tool misuse
 
 **Objective:** Show why tool access must be governed by more than tool descriptions or agent instructions.
 
-Use a mock Swag Store MCP service with synthetic data and narrowly scoped tools:
+The base repository Compose stack does not include an MCP server. Run this section only if the instructor has separately supplied and verified a mock Swag Store MCP service with synthetic data and narrowly scoped tools:
 
 - `list_products`: read-only catalog listing.
 - `get_product`: read-only product detail.
@@ -146,7 +146,7 @@ The mock server must not connect to a real store or production database.
 
 Ask the agent to investigate an inventory display issue. Include untrusted product content that tries to persuade the agent to change stock or delete a product.
 
-Run the baseline with an intentionally permissive tool configuration, then repeat with only the necessary read tools exposed. Finally, test an approval-required write if the configured gateway and governance environment support it.
+If the separate mock MCP service is available, run the baseline with an intentionally permissive tool configuration, then repeat with only the necessary read tools exposed. Finally, test an approval-required write if the configured gateway and governance environment support it. Otherwise, mark this extension not configured and continue with the filesystem and Compose-service capability tests in the 4Cs runbook.
 
 Observe which tools are discoverable, which calls are allowed or denied, whether calls are held for approval, whether direct access can bypass the gateway, and whether decisions are auditable.
 
@@ -266,3 +266,15 @@ Do not pre-fill the after-controls column with "blocked". Participants must run 
 Participants can explain the agent's effective permissions, show evidence of at least one attempted out-of-scope action, identify which control did or did not stop it, and describe the remaining blast radius.
 
 The workshop is successful when participants leave with a permission and containment model they can apply to their own agent workflows, not merely a working demo application.
+
+
+## Optional positive hardening finale: DHI MCP
+
+Once the blast-radius investigation and containment retest are complete, instructors can add a supply-chain hardening finale. Participants register the read-only DHI MCP server, attach it to a sandbox, compare baseline and DHI-informed Dockerfile proposals, and then apply a DHI Sandbox kit to test image-source network policy.
+
+- [Lab 6.1: Register DHI MCP](labs/DHI_MCP_01_REGISTER.md)
+- [Lab 6.2: Attach and authorize](labs/DHI_MCP_02_ATTACH_AUTHORIZE.md)
+- [Lab 6.3: Agent uses DHI](labs/DHI_MCP_03_AGENT_USES_DHI.md)
+- [Lab 6.4: Pin policy with a kit](labs/DHI_MCP_04_PIN_WITH_KIT.md)
+
+Keep the distinction clear: DHI MCP informs image selection; it does not force the agent to use DHI. The kit may provide steering and network policy, but only observed policy decisions and connection tests demonstrate enforcement. Scan the built image independently. These are optional extension labs, not prerequisites for completing the 4Cs workshop.
