@@ -58,7 +58,7 @@ app.get("/api/products/:id/image", async (req, res) => {
     return;
   }
 
-  res.contentType("image/png");
+  res.contentType("image/svg+xml");
   imageStream.pipe(res);
 });
 
