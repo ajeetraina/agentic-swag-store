@@ -11,7 +11,7 @@ app.use(express.json());
 const upload = multer({ dest: os.tmpdir() });
 
 app.get("/", (req, res) => {
-  res.send("Hello World!!!");
+  res.send("Docker Swag Store API");
 });
 
 app.get("/api/products", async (req, res) => {
@@ -58,7 +58,7 @@ app.get("/api/products/:id/image", async (req, res) => {
     return;
   }
 
-  res.contentType("image/png");
+  res.contentType("image/svg+xml");
   imageStream.pipe(res);
 });
 

@@ -47,18 +47,18 @@ function App() {
 
   return (
     <>
-      <h1>Demo catalog client</h1>
+      <h1>Docker Swag Store</h1>
 
       <p>
-        <button onClick={fetchCatalog}>Refresh catalog</button>
+        <button onClick={fetchCatalog}>Refresh products</button>
         &nbsp;
-        <button onClick={createProduct}>Create product</button>
+        <button onClick={createProduct}>Add swag item</button>
       </p>
 
       {catalog ? (
         <>
           {catalog.length === 0 ? (
-            <em>There are no products... yet!</em>
+            <em>The swag shelf is empty. Add the first item!</em>
           ) : (
             <table>
               <thead>
