@@ -10,7 +10,7 @@ Labs 1 to 3 built a good sandbox with a long list of commands. A teammate who ty
 
 ## 1. Write the file
 
-Create `.sbxenv.yaml` in the repo root:
+Create `sbxenv.yaml` in the repo root:
 
 ```yaml
 schemaVersion: "1"
