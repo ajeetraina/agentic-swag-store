@@ -35,8 +35,8 @@ You see nothing from the Swag Store. The containers live inside the sandbox.
 ## 3. Open the store in your browser
 
 ```bash
-sbx ports swag --publish 5173
-sbx ports swag
+sbx port publish swag 5173
+sbx port ls swag
 ```
 
 Open the host port shown for 5173.
