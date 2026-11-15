@@ -1,0 +1,46 @@
+[
+  {
+    "id": "swag-tee-001",
+    "sku": "DOCKER-TEE-BLK",
+    "name": "Docker T-shirt",
+    "category": "apparel",
+    "description": "A classic black developer T-shirt for the Docker community.",
+    "price": 24.00,
+    "currency": "USD",
+    "stock": 120,
+    "image": "/images/docker-tee-black.png"
+  },
+  {
+    "id": "swag-hoodie-001",
+    "sku": "DOCKER-HOODIE-GRY",
+    "name": "Docker Hoodie",
+    "category": "apparel",
+    "description": "A comfortable grey hoodie for late-night builds and conference days.",
+    "price": 58.00,
+    "currency": "USD",
+    "stock": 45,
+    "image": "/images/docker-hoodie-grey.png"
+  },
+  {
+    "id": "swag-stickers-001",
+    "sku": "DOCKER-STICKER-PACK",
+    "name": "Docker Sticker Pack",
+    "category": "accessories",
+    "description": "A collection of Docker-themed stickers for laptops and notebooks.",
+    "price": 8.00,
+    "currency": "USD",
+    "stock": 300,
+    "image": "/images/docker-sticker-pack.png"
+  },
+  {
+    "id": "swag-mug-001",
+    "sku": "DOCKER-MUG-WHT",
+    "name": "Docker Coffee Mug",
+    "category": "accessories",
+    "description": "A white ceramic mug for your favourite developer beverage.",
+    "price": 14.00,
+    "currency": "USD",
+    "stock": 80,
+    "image": "/images/docker-mug-white.png"
+  }
+]
