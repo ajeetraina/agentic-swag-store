@@ -11,7 +11,7 @@ app.use(express.json());
 const upload = multer({ dest: os.tmpdir() });
 
 app.get("/", (req, res) => {
-  res.send("Hello World!!!");
+  res.send("Docker Swag Store API");
 });
 
 app.get("/api/products", async (req, res) => {
