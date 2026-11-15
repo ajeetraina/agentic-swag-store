@@ -10,7 +10,7 @@ This is a security investigation, not a coding-agent feature tour. Participants 
 
 The Swag Store is the deliberately small victim application. The workshop measures success by whether participants can identify, reproduce safely, contain, and verify the agent's blast radius.
 
-Detailed instructor guide: [Agent Blast Radius Workshop](AGENT_BLAST_RADIUS_WORKSHOP.md). Participant instructions with exact commands and prompts: [4Cs Guided Lab](labs/FOUR_CS_GUIDED_LAB.md). The optional positive hardening finale is split into four runnable guides: [register DHI MCP](labs/DHI_MCP_01_REGISTER.md), [attach and authorize](labs/DHI_MCP_02_ATTACH_AUTHORIZE.md), [agent uses DHI](labs/DHI_MCP_03_AGENT_USES_DHI.md), and [pin policy with a kit](labs/DHI_MCP_04_PIN_WITH_KIT.md).
+Detailed instructor guide: [Agent Blast Radius Workshop](AGENT_BLAST_RADIUS_WORKSHOP.md). Participant instructions are split into four standalone pages: [Context](labs/4CS_CONTEXT.md), [Capabilities](labs/4CS_CAPABILITIES.md), [Consequences](labs/4CS_CONSEQUENCES.md), and [Controls](labs/4CS_CONTROLS.md), with [startup instructions and the 4Cs index](labs/FOUR_CS_GUIDED_LAB.md). The optional positive hardening finale is split into four runnable guides: [register DHI MCP](labs/DHI_MCP_01_REGISTER.md), [attach and authorize](labs/DHI_MCP_02_ATTACH_AUTHORIZE.md), [agent uses DHI](labs/DHI_MCP_03_AGENT_USES_DHI.md), and [pin policy with a kit](labs/DHI_MCP_04_PIN_WITH_KIT.md).
 
 ## The 4Cs framework
 
