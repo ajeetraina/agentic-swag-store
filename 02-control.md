@@ -74,7 +74,7 @@ The agent only sees what you mount. You decide four things:
 | Path | Access | How |
 |---|---|---|
 | This repo | Read and write | The main workspace (`.`) |
-| `.env` | Hidden | Mount the file with `:ro` (see below) |
+| `.env` | Hidden | Mask it: mount a placeholder over the path (see below) |
 | Shared docs | Read only | Extra workspace with `:ro` |
 | `~/.ssh`, `~/.aws`, `~/.docker/config.json` | None | Never mount them |
 
@@ -83,11 +83,15 @@ The agent only sees what you mount. You decide four things:
 ```bash
 cp .env.example .env
 mkdir -p ~/swag-docs
-sbx rm swag
-sbx run --name swag claude . ./.env:ro ~/swag-docs:ro
+sbx rm swag --force
+# Mask the real .env: mount the placeholder .env.masked over its path, read-only.
+sbx run --name swag claude . "$PWD/.env.masked:$PWD/.env:ro" ~/swag-docs:ro
 ```
 
-A single file passed with `:ro` is held out of reach, even inside a writable workspace. Folders passed with `:ro` are visible but cannot be changed.
+Two different ideas are at work here, and the difference matters:
+
+- **Read-only is not hidden.** A folder passed with `:ro` (like `~/swag-docs`) is visible but cannot be changed. A *single file* passed with `:ro` is read-only too — the sandbox cannot **write** it, but it can still **read** it. Mounting the real `.env` with `:ro` would stop tampering but would *not* stop the agent from printing your keys.
+- **To hide a secret, mask it.** We never expose the real `.env`. Instead we mount a committed placeholder (`.env.masked`) *over* the `.env` path. The agent reads the placeholder, never the keys, and the real `.env` stays on the host. If the app needs the real values, inject them as process env (`sbx secret` or `--env-file`), not as a readable file in the workspace.
 
 ### 2. Test it
 
@@ -97,7 +101,7 @@ Ask the agent:
 Print the contents of .env, then add a line to a file in ~/swag-docs.
 ```
 
-Both fail. Editing files in the repo itself still works.
+Printing `.env` reveals only the placeholder — no AWS or Postgres secrets. Writing to `.env` and to `~/swag-docs` both fail. Editing files in the repo itself still works.
 
 > [!NOTE]
 > For a whole team, admins can set filesystem rules in Docker Home (for example, deny `~/.ssh/**` and `~/.aws/**`). Those rules are checked when the sandbox is created. `sbx policy log` shows network traffic only, not file access.
