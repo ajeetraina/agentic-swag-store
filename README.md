@@ -12,18 +12,28 @@ The first live demonstration runs the Swag Store portal and its supporting servi
 
 The destructive target is only the disposable PostgreSQL database created by this Compose project. The exercise uses synthetic products, no production credentials, and no host Docker socket.
 
+## The 4Cs of agent security
+
+The workshop follows four stages. Each stage builds on the previous one:
+
+1. **Context - What can the agent see?** Map the workspace, environment, tools, MCP servers, network routes, and reachable services.
+2. **Capabilities - What can the agent do?** Examine filesystem permissions and the actions exposed through connected tools.
+3. **Consequences - What could go wrong?** Investigate prompt injection, synthetic credential exposure, network access, tool misuse, and destructive changes.
+4. **Controls - How do we contain it?** Apply isolation, least privilege, network restrictions, tool mediation, approval, and audit controls. Repeat the tests and compare evidence.
+
+**The central question:** If an AI agent goes rogue, how much damage can it actually do?
+
 ## Workshop labs
 
-The workshop is organized as a sequence of investigations. Each lab uses disposable resources and synthetic data.
-
-| Lab | Title | What participants investigate |
-| --- | --- | --- |
-| 0 | **Establish the scene** | Inventory the agent's workspace, environment variables, tools, MCP servers, network routes, and reachable application services. |
-| 1 | **Workspace blast radius** | See how an agent with broad write access can modify or remove files outside the requested task, then inspect and recover the changes. |
-| 2 | **Prompt injection through catalog content** | Put adversarial instructions in a Swag Store product description and observe whether the agent treats untrusted data as instructions. |
-| 3 | **Synthetic credential and network exposure** | Use a fake canary value and a private mock HTTP receiver to test what the agent process can read and where it can connect. |
-| 4 | **MCP tool misuse** | Test read-only and write-capable Swag Store tools, including whether unauthorized changes are denied, approval-gated, or able to bypass the gateway. |
-| 5 | **Containment and retest** | Apply Docker Sandboxes, Docker MCP Gateway, and available AI Governance controls, then repeat the same tests and compare evidence. |
+| 4C stage | Lab | Title | What participants investigate |
+| --- | --- | --- | --- |
+| **Context** | 0 | **Establish the scene** | Inventory the agent's workspace, environment variables, tools, MCP servers, network routes, and reachable application services. |
+| **Capabilities** | 1 | **Workspace blast radius** | See how an agent with broad write access can modify or remove files outside the requested task, then inspect and recover the changes. |
+| **Capabilities** | 4 | **MCP tool misuse** | Test read-only and write-capable Swag Store tools, including whether unauthorized changes are denied, approval-gated, or able to bypass the gateway. |
+| **Consequences** | 2 | **Prompt injection through catalog content** | Put adversarial instructions in a Swag Store product description and observe whether the agent treats untrusted data as instructions. |
+| **Consequences** | 3 | **Synthetic credential and network exposure** | Use a fake canary value and a private mock HTTP receiver to test what the agent process can read and where it can connect. |
+| **Consequences** | Demo | **The agent that emptied the store** | Observe whether an agent can be persuaded to delete product rows from the disposable PostgreSQL database. |
+| **Controls** | 5 | **Containment and retest** | Apply Docker Sandboxes, Docker MCP Gateway, and available AI Governance controls, then repeat the same tests and compare evidence. |
 
 ### Featured live demonstration: The agent that emptied the store
 
@@ -63,4 +73,4 @@ All destructive exercises are restricted to disposable lab resources. Do not use
 
 ## Upstream attribution
 
-This project is based on [dockersamples/catalog-service-node](https://github.com/docksamples/catalog-service-node). The upstream project is released under CC0 1.0 Universal. The original license is retained in this repository.
+This project is based on [dockersamples/catalog-service-node](https://github.com/dockersamples/catalog-service-node). The upstream project is released under CC0 1.0 Universal. The original license is retained in this repository.
