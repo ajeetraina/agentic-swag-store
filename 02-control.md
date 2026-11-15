@@ -107,4 +107,8 @@ Both fail. Editing files in the repo itself still works.
 - Network: deny-by-default, allow what the app needs, deny known exfil hosts, prove it with the log.
 - Files: mount only the repo, hide `.env`, mount reference material read-only.
 
-Next: [Lab 3: Choice](03-choice.md)
+---
+
+| Previous | Next |
+| :-- | --: |
+| [← Lab 1: Contain](01-contain.md) | [Lab 3: Choice →](03-choice.md) |

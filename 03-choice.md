@@ -73,4 +73,8 @@ sbx policy check network cgr.dev
 | `dhi-mixin` kit | Blocks other hardened registries at the network edge |
 | Docker Scout | Lets you verify the result, not trust the agent |
 
-Next: [Lab 4: Capacity](04-capacity.md)
+---
+
+| Previous | Next |
+| :-- | --: |
+| [← Lab 2: Control](02-control.md) | [Lab 4: Capacity →](04-capacity.md) |

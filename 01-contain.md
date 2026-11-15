@@ -59,4 +59,8 @@ It cannot. Your home folder was never mounted. There is also no host Docker sock
 | Agent uses your Docker daemon | Agent has its own Docker daemon |
 | A bad command hits your machine | A bad command hits a disposable VM |
 
-Next: [Lab 2: Control](02-control.md)
+---
+
+| Previous | Next |
+| :-- | --: |
+| [← Home](README.md) | [Lab 2: Control →](02-control.md) |

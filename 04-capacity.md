@@ -63,4 +63,8 @@ A teammate now runs `git pull` and `sbx env run`, and gets the same sandbox.
 | Each laptop is different | Every laptop gets the same sandbox |
 | Changes are silent | Changes go through pull request review |
 
-Next: [Lab 5: Coordinate](05-coordinate.md)
+---
+
+| Previous | Next |
+| :-- | --: |
+| [← Lab 3: Choice](03-choice.md) | [Lab 5: Coordinate →](05-coordinate.md) |
