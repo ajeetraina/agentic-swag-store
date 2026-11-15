@@ -17,7 +17,7 @@ The destructive target is only the disposable PostgreSQL database created by thi
 The workshop follows four stages. Each stage builds on the previous one:
 
 1. **Context - What can the agent see?** Map the workspace, environment, tools, MCP servers, network routes, and reachable services.
-2. **Capabilities - What can the agent do?** Examine filesystem permissions and the actions exposed through connected tools.
+2. **Capabilities - What can the agent do?** Verify Swag Store source, service, filesystem and outbound-network access; distinguish sandbox policy from Compose authorization.
 3. **Consequences - What could go wrong?** Investigate prompt injection, synthetic credential exposure, network access, tool misuse, and destructive changes.
 4. **Controls - How do we contain it?** Apply isolation, least privilege, network restrictions, tool mediation, approval, and audit controls. Repeat the tests and compare evidence.
 
@@ -39,10 +39,10 @@ Each C has a separate participant page with its own commands, prompt, expected o
 | 4C stage | Lab | Title | What participants investigate |
 | --- | --- | --- | --- |
 | Context | 1 | Establish the scene | Inventory the agent's workspace, environment, tools, MCP servers, network routes, and reachable application services. |
-| Capabilities | 2 | Workspace permissions | Verify which project files the agent can read and write using a disposable fixture. |
+| Capabilities | 2 | Swag Store access boundaries | Inventory needed vs unnecessary access to the catalog API, PostgreSQL, pgAdmin, Kafka, LocalStack, host mounts and outbound destinations; inspect `sbx policy`. |
 | Consequences | 3 | Secret discovery and prompt injection | Observe synthetic canary handling and whether untrusted catalog content redirects the agent. |
 | Consequences | Demo | The agent that emptied the store | Optional destructive exercise against the disposable PostgreSQL database only. |
-| Controls | 4 | Containment and retest | Apply isolation, least privilege, network restrictions and any separately configured tool governance, then repeat the tests. |
+| Controls | 4 | Swag Store policy and retest | Deny an unrelated external destination with `sbx policy`, optionally allow DHI, verify decisions/logs, and separately assess filesystem mounts and Compose service authorization. |
 | Hardening finale | 6 | DHI MCP and image-source policy | Discover hardened images, compare agent recommendations, then apply and verify a Sandbox kit's network policy. |
 
 ### DHI hardening finale
