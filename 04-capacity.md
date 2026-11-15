@@ -16,6 +16,8 @@ Create `sbxenv.yaml` in the repo root:
 schemaVersion: "1"
 agent: claude
 
+workspace: .
+
 kits:
   # DHI MCP + steering + 3rd-party registry deny, from Lab 3
   - git+https://github.com/ajeetraina/docker-cloud-sandboxes-demo.git#dir=agent-cli/codex-dhi/dhi-mixin
