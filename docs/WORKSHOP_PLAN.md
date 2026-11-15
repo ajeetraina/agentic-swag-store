@@ -1,59 +1,95 @@
-# Swag Store workshop foundation
+# Agentic Swag Store workshop plan
 
-## Goal
+## Workshop title
 
-Adapt the Docker Product Catalog sample into a small, realistic Swag Store that participants can use to explore AI coding agents, Docker Sandboxes, MCP tool access, and AI governance.
+**Trust the Agent? The Blast Radius of an Autonomous Coding Agent**
 
-Upstream starting point: https://github.com/dockersamples/catalog-service-node
+## Central premise
 
-## Preserve from the upstream application
+This is a security investigation, not a coding-agent feature tour. Participants investigate how an autonomous coding agent can turn a routine task into an incident when it has broad filesystem access, inherited credentials, network reachability, powerful tools, or permission to make consequential changes.
 
-- Node.js catalog API and existing service boundaries
-- PostgreSQL product persistence
-- S3-compatible product image storage
-- Kafka product update events
-- External inventory integration through the mock service
-- React demo client
-- Jest unit tests and Testcontainers integration tests
-- Existing Docker Compose development environment
+The Swag Store is the deliberately small victim application. The workshop measures success by whether participants can identify, reproduce safely, contain, and verify the agent's blast radius.
 
-Keep upstream application behavior intact in the first import. Make the Swag Store changes in small, reviewable commits.
+Detailed instructor and participant guide: [Agent Blast Radius Workshop](AGENT_BLAST_RADIUS_WORKSHOP.md).
 
-## Swag Store domain mapping
+## Learning outcomes
 
-| Existing concept | Swag Store concept |
-| --- | --- |
-| Product | Swag item |
-| Product image | Merchandise image |
-| Inventory | Available stock by SKU |
-| Product update event | Swag catalog update event |
-| Catalog client | Swag Store storefront |
+- Inventory the agent's effective permissions across workspace, process environment, tools, credentials, and network.
+- Understand prompt injection through untrusted repository and application content.
+- Distinguish host isolation from authorization to connected services.
+- Identify direct paths that bypass governed MCP tools.
+- Apply Docker Sandboxes, Docker MCP Gateway, and available AI Governance controls as layered defenses.
+- Compare baseline and controlled behavior using evidence rather than assumptions.
 
-Initial merchandise: Docker T-shirt, Docker hoodie, sticker pack, and coffee mug.
+## Application foundation
 
-## Incremental implementation
+The project is based on [dockersamples/catalog-service-node](https://github.com/dockersamples/catalog-service-node).
 
-1. **Import baseline:** bring across the upstream source, tests, Compose setup, and license before changing application behavior.
-2. **Rebrand:** update sample data, storefront copy, product imagery, and project documentation.
-3. **Store workflows:** add a small cart and checkout flow only if needed for the workshop. Do not imply the upstream catalog already has order or payment capabilities.
-4. **MCP server:** expose product and inventory operations as explicit tools. Start read-only, then add controlled write operations.
-5. **Governance:** demonstrate allowed, denied, and approval-required operations through the actual Docker MCP Gateway and organization governance mechanisms. Verify enforcement and audit records rather than relying on tool annotations alone.
-6. **Sandbox labs:** run coding tasks, unit tests, and integration tests inside Docker Sandboxes. Add a cloud sandbox exercise as a separate optional lab.
+Preserve the existing Node.js catalog API, PostgreSQL, S3-compatible product image storage, Kafka events, mock inventory integration, React client, Jest tests, Testcontainers tests, Compose setup, and upstream CC0 license.
 
-## Security boundaries
+The storefront is a scenario environment, not the main learning objective. It has a catalog and a local in-memory demo cart. It does not implement real checkout, payments, orders, or inventory reservation.
 
-- Treat product descriptions and other catalog fields as untrusted data.
-- Do not put production credentials or real customer data in the demo.
-- Keep destructive or business-impacting tools behind approval.
-- Do not expose the database directly to the agent when an approved MCP tool is sufficient.
-- Restrict direct network paths that could bypass the MCP Gateway.
-- Store secrets outside source control.
+## Incident scenario
+
+A developer asks an agent to fix an inventory display bug and clean up old product data. The agent can access the repository, terminal, local application services, and a set of tools. Untrusted product content or issue text attempts to redirect the agent.
+
+Participants trace the incident across workspace changes, synthetic credential exposure, application data, MCP tools, and a private mock network receiver. They then add controls and rerun the same scenario.
+
+All actions use disposable resources, synthetic data, and mock endpoints. No production credentials, real customer data, public targets, or destructive host operations are allowed.
+
+## Blast-radius zones
+
+1. Workspace and source files.
+2. Developer identity and accessible credential material.
+3. Application data such as catalog and inventory.
+4. Connected tools and MCP servers.
+5. Network-reachable services.
+6. Delivery pipeline and downstream software supply chain.
+
+This is a threat model for the exercises, not a claim that every agent has every capability. Actual impact depends on runtime, permissions, credentials, network policy, and connected tools.
+
+## Workshop sequence
+
+1. Establish the scene and inventory effective permissions.
+2. Workspace blast radius.
+3. Prompt injection through catalog content.
+4. Synthetic credential and network exposure.
+5. MCP tool misuse.
+6. Containment using Docker Sandboxes, Docker MCP Gateway, and available AI Governance controls.
+7. Retest and compare evidence.
+
+Target duration: 120 minutes. The detailed timing, setup, safety contract, lab instructions, evidence requirements, and instructor checklist are in [docs/AGENT_BLAST_RADIUS_WORKSHOP.md](AGENT_BLAST_RADIUS_WORKSHOP.md).
+
+## Defense layers
+
+### Docker Sandboxes
+
+Use disposable isolated agent execution with a narrowly scoped workspace. Verify the actual filesystem and network behavior. Do not assume sandboxing automatically revokes credentials or controls external services.
+
+### Docker MCP Gateway
+
+Mediate access to MCP tools, expose only necessary capabilities, deny destructive operations by default, and prevent direct network paths that bypass the gateway. Verify actual policy decisions and logs.
+
+### AI Governance
+
+Use the governance controls available in the target environment for organization policy, approval, and auditability. Do not claim enforcement unless it has been configured and tested.
+
+## Safety boundaries
+
+- Use a disposable VM or Docker Sandbox and workshop repository clone.
+- Use synthetic data and fake canary values only.
+- Never mount home directories, SSH credentials, cloud credentials, Docker socket, or personal browser profiles into the agent workspace.
+- Keep mock endpoints private to the lab network.
+- Make destructive targets disposable and resettable.
+- Do not target participant hosts, public IPs, production systems, or real infrastructure.
+- Capture evidence and record unverified controls honestly.
 
 ## Acceptance criteria
 
-- The imported baseline starts using the documented Compose workflow.
-- Unit and integration tests have documented, reproducible commands.
-- Storefront displays the sample swag catalog.
-- MCP read tools work against the running application.
-- Sensitive write tools are governed and their decisions can be verified.
-- Workshop instructions distinguish implemented behavior from illustrative policy examples.
+- The application baseline and reset process are reproducible.
+- Each lab uses synthetic data and a disposable target.
+- Baseline and after-controls behavior are recorded in a retest matrix.
+- Sandboxing behavior is verified for the actual runtime configuration.
+- MCP Gateway enforcement is verified, including direct bypass paths.
+- Governance approval and audit behavior are verified where available.
+- Workshop material distinguishes implemented controls, verified outcomes, and illustrative examples.
