@@ -31,8 +31,9 @@ The credential stays on the host. The sandbox never holds it.
 `--static-mcp` is set at creation, so recreate the sandbox:
 
 ```bash
-sbx rm swag
-sbx run --name swag --static-mcp remotedhi claude . ./.env:ro
+sbx rm swag --force
+# Keep .env masked here too, same as Lab 2.
+sbx run --name swag --static-mcp remotedhi claude . "$PWD/.env.masked:$PWD/.env:ro"
 ```
 
 ## 4. Let the agent use it
@@ -73,4 +74,8 @@ sbx policy check network cgr.dev
 | `dhi-mixin` kit | Blocks other hardened registries at the network edge |
 | Docker Scout | Lets you verify the result, not trust the agent |
 
-Next: [Lab 4: Capacity](04-capacity.md)
+---
+
+| Previous | Next |
+| :-- | --: |
+| [← Lab 2: Control](02-control.md) | [Lab 4: Capacity →](04-capacity.md) |

@@ -76,4 +76,8 @@ The sandboxes are gone. The commits stay in your repo.
 | Capacity | Everyone gets the same sandbox |
 | Coordinate | Several boxed agents, one repo, you decide |
 
-Back to the [index](README.md)
+---
+
+| Previous | Next |
+| :-- | --: |
+| [← Lab 4: Capacity](04-capacity.md) | [Home →](README.md) |

@@ -35,8 +35,8 @@ You see nothing from the Swag Store. The containers live inside the sandbox.
 ## 3. Open the store in your browser
 
 ```bash
-sbx ports swag --publish 5173
-sbx ports swag
+sbx port publish swag 5173
+sbx port ls swag
 ```
 
 Open the host port shown for 5173.
@@ -59,4 +59,8 @@ It cannot. Your home folder was never mounted. There is also no host Docker sock
 | Agent uses your Docker daemon | Agent has its own Docker daemon |
 | A bad command hits your machine | A bad command hits a disposable VM |
 
-Next: [Lab 2: Control](02-control.md)
+---
+
+| Previous | Next |
+| :-- | --: |
+| [← Home](README.md) | [Lab 2: Control →](02-control.md) |
